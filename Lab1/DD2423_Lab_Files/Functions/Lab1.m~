@@ -1,0 +1,116 @@
+%%we prepare matlab
+clear
+close all
+% we use fftwave function to generate all the images
+% we need: Real, imaginarty, abs, and angle
+%All the images will be 128x128 pixel big
+
+%%Question  1 
+Size = 128; 
+%The first Point != 0 is in the coordinates
+p = 5;
+q = 9;
+
+ 
+
+%Assigned 1 to that coordinate
+figure;
+fftwave(p , q, Size );
+%The next step is to try different points (p,q)
+Values =[9,5;17,9;17,121;5,1;125,1];
+
+for i=1:size(Values,1)
+    figure;
+    fftwave(Values(i,1),Values(i,2),Size);
+end
+
+%%Question 2
+
+close all;
+clear all; 
+% we choose a point in the left upper side of the image so we dont need to
+% transform the coordinates
+u = 5;
+v = 9;
+Size = 128;
+img = zeros(Size,Size);
+re = zeros(Size,Size);
+sol = zeros(Size,Size);
+%Now we need to get the value in the spatial domain of every pixel
+%(128*128) then we need a loop like the following
+for m = 1:Size
+    for n = 1:Size
+            f = 2 * pi * ((m*u + n*v)/Size);
+            sol(m,n) = 1/Size^2 *( cos(f) + i*sin(f));
+            re(m,n) = 1/Size^2 * cos(f) ;
+            img(m,n) = 1/Size^2 * i*sin(f) ;
+    end
+end
+
+
+%We show first the propagation on the x axis
+figure(1)
+for i=1:Size
+    plot(real(sol(:,i)))
+    pause(0.1)
+end
+
+%We show first then the propagation on the y axis
+figure(2)
+for i=1:Size
+    plot(real(sol(i,:)))
+    pause(0.1)
+end
+
+
+
+%% Question 5.A
+
+% It now exceeds in the x direction
+
+clear all
+close all
+
+Size = 128;
+
+u = 5;
+v = 9;
+
+figure
+fftwave(u,v,Size)    
+figure
+fftwave(u,Size+2-v,Size)  % we use Size + 2 as we want the exact same symetric point but on the right side of the image
+                          % we check it as now the wave length is the same
+%% Question 5.B
+
+%It now exceeds in the y 
+clear all
+close all
+
+Size = 128;
+
+u = 5;
+v = 9;
+
+figure
+fftwave(u,v,Size)    
+figure
+fftwave(Size + 2 - u,v,Size)  % we use Size + 2 as we want the exact same symetric point but on the right side of the image
+                          % we check it as now the wave length is the same
+
+%% 5.2 - exceed on both
+
+
+clear all
+close all
+
+Size = 128;
+
+u = 5;
+v = 9;
+
+figure
+fftwave(u,v,Size)    
+figure
+fftwave(Size + 2 - u,Size+2-v,Size)  % we use Size + 2 as we want the exact same symetric point but on the right side of the image
+                          % we check it as now the wave length is the same
